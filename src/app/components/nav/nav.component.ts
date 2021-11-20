@@ -31,7 +31,6 @@ export class NavComponent implements OnInit {
     password: '1212'
   }
 
-  token = '';
   createdUser = true;
 
   constructor(
@@ -65,9 +64,8 @@ export class NavComponent implements OnInit {
   login() {
     this.auth.login('visitante@mail.com', '1212')
     .pipe(
-      switchMap((token) => {
-        this.token = token.access_token;
-        return this.auth.profile(token.access_token)
+      switchMap(() => {
+        return this.auth.profile();
       })
     )
     .subscribe(user => {

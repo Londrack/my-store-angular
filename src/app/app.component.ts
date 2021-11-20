@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from './interfaces/user.model';
+import { FilesService } from './services/files.service';
 
 
 @Component({
@@ -12,6 +13,7 @@ export class AppComponent {
 
   showImg = true;
   token = '';
+  imgRta = '';
   profile: User = {
     id: '',
     email: '',
@@ -19,7 +21,9 @@ export class AppComponent {
     name: ''
   }
 
-  constructor(){}
+  constructor(
+    private fileserv: FilesService
+  ){}
 
   imgParent = 'https://picsum.photos/500';
 
@@ -30,5 +34,23 @@ export class AppComponent {
   toggleShowImg(){
     this.showImg = !this.showImg
   }
+
+  // educativo
+  downloadPDF(){
+    this.fileserv.get('myPdf', 'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf', 'application/pdf')
+    .subscribe()
+  }
+
+  onUpload(event: Event){
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0)
+    if(file) {
+      this.fileserv.upload(file)
+      .subscribe(rta =>{
+          this.imgRta = rta.location;
+      })
+    }
+  }
+
 
 }

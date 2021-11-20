@@ -3,13 +3,15 @@ import { HttpClient, HttpErrorResponse,  HttpStatusCode } from '@angular/common/
 import { catchError, retry, map } from 'rxjs/operators'
 import { throwError } from 'rxjs'
 import { CreateProductDTO, Product, UpdateProductDTO } from '../interfaces/product.model';
+import { checkTime } from '../interceptors/time.interceptor';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/products';
+  private apiUrl = `${environment.API_URL}/api/products`;
 
   constructor(
     private http: HttpClient
@@ -50,7 +52,7 @@ export class ProductsService {
   }
 
   getByPage(limit: number, offset: number){
-    return this.http.get<Product[]>(this.apiUrl, { params: {limit, offset} })
+    return this.http.get<Product[]>(this.apiUrl, { params: {limit, offset}, context: checkTime() })
     .pipe(
       retry(3),
       map(products =>

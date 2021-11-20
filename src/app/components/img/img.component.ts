@@ -21,7 +21,6 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
   @Input('img')
   set changeImg(newImg: string){
     this.img = newImg
-    console.log('just changeImg');
   }
   @Input() alt:string = ''
   @Output() loaded = new EventEmitter<string>();

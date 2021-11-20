@@ -6,10 +6,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TokenService {
 
-  private apiUrl = 'https://young-sands-07814.herokuapp.com/api/users';
+  constructor() { }
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  save(token: string){
+    localStorage.setItem('token', token);
+  }
+
+  get(){
+    return localStorage.getItem('token');
+  }
 
 }
