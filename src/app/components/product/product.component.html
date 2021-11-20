@@ -1,0 +1,13 @@
+<app-img [img] = 'product.images[0]'></app-img>
+<div class="desc">
+    <div>
+        <h2>{{ valorFinal | currency:'$' }}</h2>
+        <p>{{ product.title  }}</p>
+    </div>
+    <div>
+        <button class="no-btn" (click)="addToCart()">
+            <img width="35" src="./assets/icons/cart-add.svg" alt="">
+        </button>
+    </div>
+</div>
+<button (click)="onShowDetail()">Ver detalle</button>

@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('./styles/reset.css');
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "~swiper/css";
+@import "~swiper/css/pagination";
+
+:root {
+    --font-krona: 'Krona One', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --grey-dark: #212121;
+    --grey-middle: #484848;
+    --grey-light: #BABABA;
+    --grey-white: #F5F5F6;
+
+    --fill-grey-dark: invert(9%) sepia(0%) saturate(1%) hue-rotate(88deg) brightness(105%) contrast(92%);
+    --fill-grey-middle: invert(26%) sepia(0%) saturate(37%) hue-rotate(219deg) brightness(94%) contrast(86%);
+    --fill-grey-light: invert(100%) sepia(1%) saturate(2134%) hue-rotate(181deg) brightness(99%) contrast(94%);
+    --fill-white: invert(100%) sepia(1%) saturate(2%) hue-rotate(302deg) brightness(108%) contrast(100%);
+
+}
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3{
+    font-family: 'Krona One', sans-serif;
+}
+
+.no-btn{
+    border: 0;
+    background: transparent;
+}
+
+.product-detail.active{
+    .swiper-pagination-bullet-active{
+        background: white!important;
+    }
+
+    .swiper-pagination-bullet{
+        background: white!important;
+    }
+}

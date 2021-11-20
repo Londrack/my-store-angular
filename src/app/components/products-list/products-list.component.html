@@ -1,0 +1,24 @@
+<button (click)="onShowDetail('5205')">Detaller Error</button>
+<button (click)="createNewProduct()">Crear nuevo producto</button>
+<div class="products--grid">
+    <app-product
+        *ngFor="let product of products"
+        [product]="product"
+        (addedProduct)="onAddToCart($event)"
+        (showProduct)="onShowDetail($event)"
+    ></app-product>
+    <button (click)="loadMore()">LoadMore</button>
+</div>
+<div class="product-detail" [class.active]="showProductDetail">
+    <div>
+        <button class="close-btn no-btn" (click)="togglesShowProduc()">
+            <img width="50" src="./assets/icons/close.svg" alt="cerrar menú" />
+        </button>
+        <app-product-detail
+            *ngIf="productChosen"
+            [product]="productChosen"
+            (productUpdated)="onUpdatedProduct($event)"
+            (productDeleted)="onDeletedProduct($event)"
+        ></app-product-detail>
+    </div>
+</div>
