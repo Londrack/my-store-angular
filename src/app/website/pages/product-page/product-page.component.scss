@@ -1,0 +1,42 @@
+.page-product {
+    padding: 3em;
+    .detail {
+      display: block;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+      position: relative;
+
+      .gallery {
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .backButton{
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      h2, h1 {
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 2em;
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+    }
+}
+
+// Tablets
+@media screen and (min-width: 40em) and (max-width:63.9em) {}
+
+// Desktop
+@media screen and (min-width: 64em) {
+.page-product {
+  padding: 3em;
+
+  .detail {
+      display: grid;
+    }
+  }
+}

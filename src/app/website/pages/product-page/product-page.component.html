@@ -1,0 +1,21 @@
+<div class="page-product">
+    <div class="detail">
+        <div class="gallery">
+            <swiper
+            [pagination]="{dynamicBullets: true}"
+            [navigation]= "true"
+            >
+                <ng-template swiperSlide *ngFor="let img of product.images">
+                    <app-img [img]="img" [alt]="product.title"></app-img>
+                </ng-template>
+            </swiper>
+        </div>
+        <div>
+            <button class="backButton" (click)="goToBack()">Back</button>
+            <h2 class="title">{{ product.title }}</h2>
+            <h2 class="price">{{ product.price | currency:'$' }}</h2>
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
+</div>
+

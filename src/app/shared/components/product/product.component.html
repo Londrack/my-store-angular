@@ -1,0 +1,17 @@
+
+<a [routerLink]="['/product/', product.id]" title="Detalle del producto">
+    <app-img [img] = 'product.images[0]'></app-img>
+</a>
+<div class="desc">
+    <div>
+        <h2>{{ valorFinal | currency:'$' }}</h2>
+        <p>{{ product.title  }}</p>
+    </div>
+    <div>
+        <button class="no-btn" (click)="addToCart()">
+            <img width="35" src="./assets/icons/cart-add.svg" alt="">
+        </button>
+    </div>
+</div>
+<!-- <button (click)="onShowDetail()">Ver detalle</button> -->
+<a routerLink='.' [queryParams]="{product: product.id}">Ver detalle</a>

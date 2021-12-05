@@ -1,0 +1,15 @@
+<h2 class="title">{{ product.title }}</h2>
+<swiper
+    [pagination]="{
+        dynamicBullets: true
+      }"
+    [navigation]= "true"
+>
+    <ng-template swiperSlide *ngFor="let img of product.images">
+        <app-img [img]="img" [alt]="product.title"></app-img>
+    </ng-template>
+</swiper>
+<h2 class="price">{{ product.price | currency:'$' }}</h2>
+<p>{{ product.description }}</p>
+<button (click)="updateProduct(product.id)">Edit</button>
+<button (click)="deleteProduct()">Eliminar</button>

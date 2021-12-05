@@ -1,0 +1,58 @@
+<div class="show-mobile" [class.scrolled]="scrolled">
+  <div>
+    <button (click)="toggleMenu()" class="menu-btn">
+        <img class="white-icon" src="./assets/icons/menu.svg"/>
+    </button>
+    <a routerLink="home" class="logo">
+        <img src="./assets/icons/logo-simple.svg" alt="Logo JaqueMate">
+    </a>
+    <a routerLink="cart" class="cart-btn">
+      <span *ngIf="myCart.length > 0" class="cart-label">{{myCart.length}}</span>
+      <img class="white-icon" src="./assets/icons/cart.svg"/>
+    </a>
+  </div>
+  <div class="side-menu" [class.active]="activeMenu">
+    <button class="close-btn" (click)="toggleMenu()">
+      <img width="50" src="./assets/icons/close.svg" alt="cerrar menú" />
+    </button>
+    <nav>
+      <ul>
+        <li><a routerLinkActive="active" routerLink="home">All</a></li>
+        <li *ngFor="let item of categories">
+          <a routerLinkActive="active" [routerLink]="'/category/'+item.id">{{ item.name }}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div class="hide-mobile" [class.scrolled]="scrolled">
+  <div>
+    <nav>
+      <a class="logo" routerLinkActive="/">
+        <img width="320" src="./assets/icons/logo.svg" alt="Logo JaqueMate">
+      </a>
+      <ul>
+        <li><a routerLinkActive="active" routerLink="home">All</a></li>
+        <li *ngFor="let item of categories">
+          <a routerLinkActive="active" [routerLink]="'/category/'+item.id">{{ item.name }}</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="info">
+      <div class="account">
+        <button *ngIf="!profile?.name; else elseBlock" (click)="login()">Login</button>
+        <ng-template #elseBlock>
+          <a routerLink="/profile">{{ profile?.email }}</a>
+          <button (click)="logout()">Logout</button>
+        </ng-template>
+
+      </div>
+      <div>
+        <a routerLinkActive="/cart" class="cart-btn">
+          <span *ngIf="myCart.length" class="cart-label">{{myCart.length}}</span>
+          <img width="50" src="./assets/icons/cart.svg"/>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
