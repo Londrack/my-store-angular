@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,10 @@ export class TokenService {
 
   get(){
     return localStorage.getItem('token');
+  }
+
+  remove(){
+    localStorage.removeItem('token');
   }
 
 }

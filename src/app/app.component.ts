@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from './interfaces/user.model';
+import { AuthService } from './services/auth.service';
 import { FilesService } from './services/files.service';
+import { TokenService } from './services/token.service';
 
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: '<router-outlet ></router-outlet>',
   styleUrls: ['./app.component.scss']
 })
 
@@ -14,16 +16,21 @@ export class AppComponent {
   showImg = true;
   token = '';
   imgRta = '';
-  profile: User = {
-    id: '',
-    email: '',
-    password: '',
-    name: ''
-  }
+  profile: User | null = null;
 
   constructor(
-    private fileserv: FilesService
+    private fileserv: FilesService,
+    private authService: AuthService,
+    private tokenService: TokenService
   ){}
+
+  ngOnInit(){
+    const token = this.tokenService.get();
+    if(token){
+      this.authService.profile()
+      .subscribe()
+    }
+  }
 
   imgParent = 'https://picsum.photos/500';
 

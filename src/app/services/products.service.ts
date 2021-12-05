@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse,  HttpStatusCode } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse,  HttpParams,  HttpStatusCode } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators'
 import { throwError } from 'rxjs'
 import { CreateProductDTO, Product, UpdateProductDTO } from '../interfaces/product.model';
 import { checkTime } from '../interceptors/time.interceptor';
 import { environment } from 'src/environments/environment';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  private apiUrl = `${environment.API_URL}/api/products`;
+  private apiUrl = `${environment.API_URL}/api`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   getAll(limit?: number, offset?: number){
-    return this.http.get<Product[]>(this.apiUrl)
+    return this.http.get<Product[]>(`${this.apiUrl}/products`)
   }
 
   getOne(id: string){
-    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    return this.http.get<Product>(`${this.apiUrl}/products/${id}`)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         if(error.status === HttpStatusCode.Conflict){
@@ -40,19 +42,19 @@ export class ProductsService {
   }
 
   create(dto: CreateProductDTO){
-    return this.http.post<Product>(this.apiUrl, dto);
+    return this.http.post<Product>(`${this.apiUrl}/products`, dto);
   }
 
   update(id: string, dto: UpdateProductDTO){
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
+    return this.http.put<Product>(`${this.apiUrl}/products/${id}`, dto);
   }
 
   delete(id: string){
-    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/products/${id}`);
   }
 
   getByPage(limit: number, offset: number){
-    return this.http.get<Product[]>(this.apiUrl, { params: {limit, offset}, context: checkTime() })
+    return this.http.get<Product[]>(`${this.apiUrl}/products`, { params: {limit, offset}, context: checkTime() })
     .pipe(
       retry(3),
       map(products =>
@@ -65,4 +67,31 @@ export class ProductsService {
       )
     )
   }
+
+  getByCategory(categoryId: string, limit?:number, offset?: number){
+    let params = new HttpParams();
+    if(limit && offset != null){
+      params = params.set('limit', limit);
+      params = params.set('offset', offset)
+    }
+    return this.http
+    .get<Product[]>(`${this.apiUrl}/categories/${categoryId}/products`, { params })
+    .pipe(
+      catchError(err => this.handleError(err))
+    )
+  }
+
+  handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+
+      this.router.navigate(['/category-error']);
+    }
+    return throwError('Something bad happened; please try again later.');
+  }
+
 }
